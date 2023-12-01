@@ -27,17 +27,15 @@ const initPlayers = (players) => {
 
   // Instead of forloop use Map method
   // Code here
-  let i = 0;
-  PLAYERS.map(() => {
-    detailedPlayers.push({
-      name: PLAYERS[i],
-      strength: getRandomStrength(),
-      image: "images/super-" + (i + 1) + ".png",
-      type: i % 2 == 0 ? "hero" : "villain",
-    });
-    i = i + 1;
+  players.map((player, i) => {
+    let newplayer = {};
+    newplayer.name = player;
+    newplayer.image = `./images/super-${i + 1}.png`;
+    newplayer.strength = getRandomStrength();
+    i % 2 == 0 ? (newplayer.type = "hero") : (newplayer.type = "villain");
+    detailedPlayers.push(newplayer);
   });
-  // console.log(detailedPlayers);
+
   return detailedPlayers;
 };
 
@@ -53,15 +51,16 @@ const buildPlayers = (players, type) => {
   // Instead of using for loop
   // Use chaining of Array methods - filter, map and join
   // Type your code here
-  let filtredPlayers = players.filter((player) => player.type == type);
-  let mappedPlayers = filtredPlayers.map(
-    (player) => `<div class="player">
-    <img src="${player.image}" alt="">
-    <div class="name">${player.name}</div>
-    <div class="strength">${player.strength}</div>
- </div>`
+  let filteredPlayers = players.filter((player) => player.type === type);
+  let mappedPlayers = filteredPlayers.map(
+    (player) =>
+      `<div class="player">
+  <img src="${player.image}" alt="">
+  <div class="name">${player.name}</div>
+  <div class="strength">${player.strength}</div>
+  </div>`
   );
-  fragment += mappedPlayers.join("");
+  fragment = mappedPlayers.join("");
 
   return fragment;
 };
